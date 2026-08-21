@@ -1,0 +1,33 @@
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.projectsSection {
+  padding: 4rem 0;
+}
+
+.projectCard {
+  margin-bottom: 2rem;
+}
+
+.projectLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.projectLink:hover {
+  text-decoration: none;
+}
+
+.projectLink .card {
+  height: 100%;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.projectLink:hover .card {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
