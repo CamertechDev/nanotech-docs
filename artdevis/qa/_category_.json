@@ -1,0 +1,9 @@
+{
+  "label": "Tests QA",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "title": "Tests QA",
+    "description": "Campagnes de tests manuels et fiches d'exécution."
+  }
+}

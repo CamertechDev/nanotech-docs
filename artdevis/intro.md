@@ -66,3 +66,6 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 
 **Roadmap**
 * [État des livraisons](./roadmap/etat-des-livraisons)
+
+**Tests QA**
+* [Campagne R2b (août 2026)](./qa/campagnes/2026-08-release-r2b)

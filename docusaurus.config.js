@@ -8,19 +8,14 @@ const config = {
   tagline: 'Documentation centralisée des projets NanoTech-inovation',
   favicon: 'img/favicon.ico',
 
-  url: 'https://your-docs-site.example.com',
+  url: 'https://nanotechdocs.vercel.app',
   baseUrl: '/',
 
   organizationName: 'NanoTech-Inovation',
   projectName: 'NanoTech-docs',
 
   onBrokenLinks: 'throw',
-
-  markdown: {
-    hooks: {
-      onBrokenMarkdownLinks: 'warn',
-    },
-  },
+  onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'fr',
@@ -49,7 +44,7 @@ const config = {
         path: 'erp',
         routeBasePath: 'erp',
         sidebarPath: './sidebars/erp.js',
-        editUrl: 'https://github.com/exfob/exfob-docs/tree/main/',
+        editUrl: 'https://github.com/CamertechDev/nanotech-docs/tree/main/',
       },
     ],
     [
@@ -59,7 +54,7 @@ const config = {
         path: 'cabineris',
         routeBasePath: 'cabineris',
         sidebarPath: './sidebars/cabineris.js',
-        editUrl: 'https://github.com/exfob/exfob-docs/tree/main/',
+        editUrl: 'https://github.com/CamertechDev/nanotech-docs/tree/main/',
       },
     ],
     [
@@ -69,7 +64,7 @@ const config = {
         path: 'sysfact',
         routeBasePath: 'sysfact',
         sidebarPath: './sidebars/sysfact.js',
-        editUrl: 'https://github.com/exfob/exfob-docs/tree/main/',
+        editUrl: 'https://github.com/CamertechDev/nanotech-docs/tree/main/',
       },
     ],
     [
@@ -79,7 +74,7 @@ const config = {
         path: 'nanotechdev',
         routeBasePath: 'nanotechdev',
         sidebarPath: './sidebars/nanotechdev.js',
-        editUrl: 'https://github.com/exfob/exfob-docs/tree/main/',
+        editUrl: 'https://github.com/CamertechDev/nanotech-docs/tree/main/',
       },
     ],
     [
@@ -89,7 +84,7 @@ const config = {
         path: 'artdevis',
         routeBasePath: 'artdevis',
         sidebarPath: './sidebars/artdevis.js',
-        editUrl: 'https://github.com/exfob/exfob-docs/tree/main/',
+        editUrl: 'https://github.com/CamertechDev/nanotech-docs/tree/main/',
       },
     ],
   ],
@@ -131,7 +126,7 @@ const config = {
             position: 'left',
           },
           {
-            href: 'https://github.com/exfob/exfob-docs',
+            href: 'https://github.com/CamertechDev/nanotech-docs',
             label: 'GitHub',
             position: 'right',
           },
@@ -170,7 +165,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/exfob/exfob-docs',
+                href: 'https://github.com/CamertechDev/nanotech-docs',
               },
             ],
           },

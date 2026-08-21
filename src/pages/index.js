@@ -7,39 +7,46 @@ import styles from './index.module.css';
 
 const projects = [
   {
+    number: '01',
+    category: 'Pilotage & gestion',
     title: 'GestionBois ERP',
     description: 'Documentation du système ERP GestionBois.',
     to: '/erp/intro',
   },
   {
+    number: '02',
+    category: 'Plateforme clinique',
     title: 'Cabineris',
     description: 'Documentation du projet Cabineris.',
     to: '/cabineris/intro',
   },
   {
+    number: '03',
+    category: 'Facturation',
     title: 'Sysfact-Web',
     description: 'Documentation du projet Sysfact-Web.',
     to: '/sysfact/intro',
   },
   {
+    number: '04',
+    category: 'Voix & terrain',
     title: 'ArtDevis',
     description: 'Application métier devis vocal pour artisans plombiers.',
     to: '/artdevis/intro',
   },
 ];
 
-function ProjectCard({title, description, to}) {
+function ProjectCard({number, category, title, description, to}) {
   return (
-    <div className={clsx('col col--4', styles.projectCard)}>
-      <Link to={to} className={styles.projectLink}>
-        <div className="card">
-          <div className="card__body">
-            <Heading as="h3">{title}</Heading>
-            <p>{description}</p>
-          </div>
-        </div>
-      </Link>
-    </div>
+    <Link to={to} className={styles.projectCard} aria-label={`Ouvrir la documentation ${title}`}>
+      <span className={styles.projectNumber}>{number}</span>
+      <div className={styles.projectContent}>
+        <span className={styles.projectCategory}>{category}</span>
+        <Heading as="h3">{title}</Heading>
+        <p>{description}</p>
+      </div>
+      <span className={styles.projectArrow} aria-hidden="true">-&gt;</span>
+    </Link>
   );
 }
 
@@ -49,20 +56,35 @@ export default function Home() {
     <Layout
       title={`${siteConfig.title}`}
       description="Documentation centralisée des projets NanoTech">
-      <header className={clsx('hero hero--primary', styles.heroBanner)}>
-        <div className="container">
-          <Heading as="h1" className="hero__title">
-            {siteConfig.title}
-          </Heading>
-          <p className="hero__subtitle">{siteConfig.tagline}</p>
+      <header className={styles.heroBanner}>
+        <div className={clsx('container', styles.heroInner)}>
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>Exfob / Documentation interne</p>
+            <Heading as="h1">{siteConfig.title}</Heading>
+            <p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
+            <p className={styles.heroIntro}>
+              Un point d'entrée unique pour comprendre, construire et faire évoluer nos produits.
+            </p>
+          </div>
+          <div className={styles.heroSignal} aria-label="Quatre projets documentés">
+            <strong>04</strong>
+            <span>projets<br />documentés</span>
+          </div>
         </div>
       </header>
       <main>
-        <section className={styles.projectsSection}>
-          <div className="container">
-            <div className="row">
-              {projects.map((props, idx) => (
-                <ProjectCard key={idx} {...props} />
+        <section className={styles.projectsSection} aria-labelledby="projects-heading">
+          <div className={clsx('container', styles.projectsInner)}>
+            <div className={styles.sectionHeading}>
+              <div>
+                <p className={styles.eyebrow}>Explorer les produits</p>
+                <Heading as="h2" id="projects-heading">Choisissez votre espace de travail</Heading>
+              </div>
+              <p className={styles.sectionNote}>Architecture, métier et exploitation réunis au même endroit.</p>
+            </div>
+            <div className={styles.projectGrid}>
+              {projects.map((props) => (
+                <ProjectCard key={props.to} {...props} />
               ))}
             </div>
           </div>
