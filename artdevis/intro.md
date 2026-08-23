@@ -26,11 +26,11 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 | Devis vocal | Livré | Flux complet Écrans 3 à 6, mock et production |
 | Flux devis France | Livré | Contrôle langue dictée, traduction FR, aperçu client |
 | Relation client | Livré | Partage PDF, marquer envoyé, accepté/refusé |
-| Mes Chantiers | Livré | Planification auto à l'acceptation, planning du jour |
+| Mes Chantiers | Livré | Navigation par date, report, annulation client |
 | Mon Équipe | Livré | Gestion des opérateurs rattachés au patron |
 | Catalogue fournisseurs | Livré | Tarifs privés par artisan, injection IA |
-| Veille et entretien | Coquille | Interface démo, logique métier en Phase 2 |
-| Facturation | Phase 2 | Non implémentée |
+| Veille et entretien | MVP mock | Alertes démo, SMS, badge dynamique — données réelles Phase 2 |
+| Factures acompte / solde | Livré | PDF + partage depuis fiche client et chantiers terminés |
 
 ## Interface
 ![alt text](image.png)
@@ -56,6 +56,7 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [Devis vocal](./fonctionnel/devis-vocal)
 * [Relation client](./fonctionnel/relation-client)
 * [Chantiers et veille](./fonctionnel/chantiers-et-veille)
+* [Factures (acompte et solde)](./fonctionnel/factures)
 * [Catalogue et tarifs fournisseurs](./fonctionnel/catalogue-fournisseurs)
 
 **Exploitation**

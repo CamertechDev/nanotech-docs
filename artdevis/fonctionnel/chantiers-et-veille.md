@@ -1,37 +1,40 @@
 ---
 sidebar_position: 4
 title: Chantiers et veille
+description: Planning jour J, navigation par date, report, annulation client, veille MVP et facturation post-chantier.
 ---
 
-## Synthèse
+# Chantiers et veille
 
-**Mes Chantiers** : lorsqu'un devis est accepté, un créneau apparaît dans le planning du jour, avec optimisation simulée et actions terrain.
+> **Spec code :** dépôt ArtDevis `docs/USECASE-CHANTIERS-VEILLE.md`
 
-**Veille et entretien** : écran de **démonstration statique**, les alertes d'entretien ne sont pas fonctionnelles (Phase 2).
-
-## Mes Chantiers (livré)
+## Mes Chantiers — livré
 
 ```
-Devis Accepté (fiche client) → insert agenda → Onglet Mes Chantiers (Pro)
-                                      ↓
-              Timeline · GPS Waze · Appel · Statut · Optimiser la journée
+Devis Accepté → agenda → Onglet Mes Chantiers (plan Pro)
+        ↓
+Navigation par date · GPS · Appel · Statuts · Optimiser · Reporter · Annulation client
+        ↓
+Chantier Terminé → proposition facturation (acompte / solde)
 ```
 
-| Zone | Contenu |
+| Fonctionnalité | Détail |
 | --- | --- |
-| Architecture | Clean Architecture complète (`PlanningRepository`, cubit, Supabase + mock) |
-| Données | Table `agenda`, migrations RLS, 1 chantier maximum par devis |
-| Planning auto | Urgence critique → 08:00, sinon enchaînement après le dernier job |
-| Interface | Cartes client, bannières trajet « Agent IA », actions terrain |
-| Tests | Planner, cubit, intégration devis accepté |
+| Planification auto | À l'**Accepté** sur la fiche client |
+| Planification manuelle | Bouton **Planifier le chantier** si échec auto |
+| Navigation | Flèches ← / →, bouton **Aujourd'hui** |
+| Report | Date future + motif (pluie, client absent…) |
+| Statuts | À faire → En cours → Terminé |
+| Annulation client | Fiche client → **Client a annulé** → retrait agenda |
+| Facturation | Bottom sheet à la clôture **Terminé** → voir [Factures](./factures) |
 
 :::note Limitation actuelle
 Les temps de trajet sont **simulés**, Google Maps n'est pas encore branché.
 :::
 
-### Affichage
+### Affichage et navigation par date
 
-L'onglet **Mes Chantiers** affiche les chantiers **du jour uniquement**. Un chantier planifié pour une autre date n'apparaît pas dans la liste courante.
+L'onglet **Mes Chantiers** permet de consulter les chantiers **par jour** (pas uniquement aujourd'hui). Utilisez les flèches ← / → ou **Aujourd'hui** pour changer de date.
 
 ### Planification automatique et manuelle
 
@@ -39,56 +42,44 @@ L'onglet **Mes Chantiers** affiche les chantiers **du jour uniquement**. Un chan
 * En cas d'échec, le devis reste accepté et un message d'avertissement s'affiche
 * Le bouton **Planifier le chantier** sur la fiche client permet une **relance manuelle**
 
-### Reste à faire (Chantiers)
+## Veille & Entretien — MVP (août 2026)
 
-| Priorité | Item |
-| --- | --- |
-| P0 | Validation production E2E (devis réel → agenda → affichage) |
-| P1 | Vrais temps de route (Google Maps) + disponibilités artisan |
-| P1 | Assignation technicien (équipe) |
-| P2 | Multi-jours, drag-and-drop, OR-Tools, RLS patron/opérateur |
-
-## Veille et entretien (coquille)
+Passage d'une coquille statique à un **MVP fonctionnel mock** :
 
 | Zone | Contenu |
 | --- | --- |
-| Interface | 2 cartes alerte démo + footer « 21 autres chantiers OK » |
-| Données | Seeds statiques, aucune base, aucun calcul |
-| Actions | Boutons SMS / Devis auto sans effet |
+| Architecture | `VeilleRepository` + `VeilleListCubit` + mock/Supabase |
+| Données mock | 2 alertes (entretien M. Bernard, rappel lot PER) |
+| Badge onglet | Compteur dynamique d'alertes |
+| **Envoyer SMS** | Ouvre l'app SMS avec message pré-rempli |
+| **Devis auto** | Navigation fiche client concernée |
+| **Voir clients** | Bottom sheet liste clients du lot PER |
 
-### Reste à faire (Veille, Phase 2)
+**Phase 2 (non livré) :** table `equipements_installes`, calcul d'échéances réel, agent IA entretien, SMS automatisé serveur.
 
-| Priorité | Item |
-| --- | --- |
-| P0 | Atelier PO : types d'alertes (chauffe-eau, PER, garanties…) |
-| P1 | Table `equipements_installes` + repository + cubit |
-| P2 | Règles d'échéances, SMS, devis entretien auto, badge dynamique |
-
-## Accès par plan
+## Plan Pro
 
 | Plan | Chantiers | Veille |
 | --- | --- | --- |
-| Starter / Essai | Upgrade requis | Upgrade requis |
-| **Pro** | Oui | Oui |
+| Starter / Essai | Upgrade | Upgrade |
+| **Pro** | ✅ | ✅ |
 
-Compte démo Pro : `pro@plomberie.fr` / `password123`
+Compte démo : `pro@plomberie.fr` / `password123`
 
-## Démo PO (5 minutes)
+## Démo PO (10 min)
 
 **Chantiers :**
 
-1. Mock + compte Pro
-2. Mes Chantiers → jobs du jour → Optimiser → changer un statut
-3. Client → devis → Accepté → retour Chantiers
+1. Mock + Pro → Mes Chantiers → naviguer entre les jours
+2. Reporter un chantier → vérifier le jour cible
+3. Terminer un chantier → facturation proposée
 
 **Veille :**
 
-1. Onglet Veille → lire les 2 alertes démo
-2. Confirmer que les boutons ne déclenchent rien (comportement attendu)
+1. Onglet Veille → 2 alertes + footer « 21 autres chantiers OK »
+2. **Envoyer SMS** sur l'alerte entretien
+3. **Voir clients** sur l'alerte PER
 
-## Décisions produit suggérées
+## QA
 
-* Valider le MVP Chantiers comme « planning jour J utilisable » malgré trajets simulés ?
-* Prioriser Google Maps avant Veille ?
-* Lancer un atelier scope Veille (équipements, fréquence, canaux SMS) ?
-* Bloquer la planification auto pour les comptes Starter ?
+Campagne : [2026-08-release-r2b](../qa/campagnes/2026-08-release-r2b) — phases **Chantiers**, **Veille**, **Factures**.

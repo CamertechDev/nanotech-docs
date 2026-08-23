@@ -1,17 +1,17 @@
 ---
 sidebar_position: 1
 title: Campagne onboarding QA (août 2026)
-description: Parcours complet, inscription, clients, équipe, tarifs, R2b, chantiers (navigation, report), annulation client, logging.
+description: Parcours complet, inscription, clients, équipe, tarifs, R2b, chantiers, veille MVP, factures, logging.
 ---
 
 # Campagne QA — Onboarding complet (août 2026)
 
 | Champ | Valeur |
 | --- | --- |
-| **Périmètre** | Inscription, clients, devis vocal, équipe, tarifs, R2b, chantiers (navigation par date, report), annulation client, logging |
-| **Release** | MVP août 2026 (R2b + planification + report + annulation client + AppLogger) |
+| **Périmètre** | Inscription, clients, devis vocal, équipe, tarifs, R2b, chantiers, veille MVP, factures (acompte/solde), logging |
+| **Release** | MVP août 2026 (R2b + chantiers + veille + factures + AppLogger) |
 | **Environnement principal** | Mock (`USE_MOCK=true`), puis prod si indiqué |
-| **Durée estimée** | 5 à 7 h (mock) + 1 h (prod optionnel) |
+| **Durée estimée** | 6 à 8 h (mock) + 1 h 30 (prod optionnel) |
 | **Exécuteur** | |
 | **Date d'exécution** | |
 | **Version testée** | Commit / build : |
@@ -30,8 +30,10 @@ Exécuter les phases **dans l'ordre**. Guides : [Index guides QA](/artdevis/qa/g
 | 5 | Tarifs fournisseurs | [Tarifs](/artdevis/qa/guides/tarifs-fournisseurs) |
 | 6 | Relation client R2b | [Relation client](/artdevis/fonctionnel/relation-client) |
 | 7 | Chantiers | [Chantiers](/artdevis/fonctionnel/chantiers-et-veille) |
-| 8 | Logging | [Logging](/artdevis/exploitation/logging-et-diagnostic) |
-| 9 | Smoke prod | Optionnel |
+| 8 | Veille MVP | [Chantiers et veille](/artdevis/fonctionnel/chantiers-et-veille) |
+| 9 | Factures | [Factures](/artdevis/fonctionnel/factures) |
+| 10 | Logging | [Logging](/artdevis/exploitation/logging-et-diagnostic) |
+| 11 | Smoke prod | Optionnel |
 
 ## Prérequis généraux
 
@@ -584,10 +586,10 @@ Référence : [Chantiers et veille](/artdevis/fonctionnel/chantiers-et-veille)
 | | |
 | --- | --- |
 | **Prérequis** | Chantier du jour affiché |
-| **Étapes** | 1. Changer le statut (ex. En cours → Terminé)<br/>2. Rafraîchir ou revenir sur l'onglet |
-| **Résultat attendu** | Statut persisté, affichage cohérent |
+| **Étapes** | 1. Changer le statut (ex. En cours → Terminé)<br/>2. Vérifier le bottom sheet **Facturer le chantier** (si implémenté)<br/>3. Rafraîchir ou revenir sur l'onglet |
+| **Résultat attendu** | Statut persisté ; proposition facturation (acompte/solde) à la clôture |
 | **P / F / N / B** | |
-| **Remarques** | |
+| **Remarques** | Voir phase 9 Factures |
 
 ### TC-CHA-008 — Compte Starter sans onglet Chantiers
 
@@ -651,7 +653,128 @@ Référence : [Chantiers et veille](/artdevis/fonctionnel/chantiers-et-veille)
 
 ---
 
-## Phase 8 — Logging et diagnostic (Niveau 1)
+## Phase 8 — Veille MVP
+
+Référence : [Chantiers et veille](/artdevis/fonctionnel/chantiers-et-veille)
+
+**Prérequis :** compte **Pro**, mock (`USE_MOCK=true`).
+
+### TC-VEI-001 — Affichage des alertes mock
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Onglet **Veille & Entretien**<br/>2. Lire le sous-titre et les cartes |
+| **Résultat attendu** | 2 alertes visibles (entretien M. Bernard + lot PER) + footer « 21 autres chantiers » |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-VEI-002 — Badge dynamique onglet
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Repérer le badge sur l'onglet Veille dans la barre du bas |
+| **Résultat attendu** | Badge numérique cohérent avec le nombre d'alertes (ex. 2) |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-VEI-003 — Envoyer SMS (alerte entretien)
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Carte entretien → **Envoyer SMS** |
+| **Résultat attendu** | Ouverture app SMS / `sms:` avec corps pré-rempli, pas de crash |
+| **P / F / N / B** | |
+| **Remarques** | Web : comportement navigateur variable |
+
+### TC-VEI-004 — Devis auto → fiche client
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Carte entretien → **Devis auto** |
+| **Résultat attendu** | Navigation vers la fiche du client concerné (M. Bernard / seed mock) |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-VEI-005 — Voir clients (alerte PER)
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Carte lot PER → **Voir clients** |
+| **Résultat attendu** | Bottom sheet listant les clients du lot (3 clients mock) |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+---
+
+## Phase 9 — Factures (acompte et solde)
+
+Référence : [Factures](/artdevis/fonctionnel/factures)
+
+**Prérequis :** compte **Pro**, mock, client **Mme Claire Dubois** (devis accepté + acompte si seed).
+
+### TC-FAC-001 — Facture acompte (fiche client)
+
+| | |
+| --- | --- |
+| **Prérequis** | Devis **Accepté** avec demande d'acompte |
+| **Étapes** | 1. Fiche client → historique → **Facture acompte (XXX €)** |
+| **Résultat attendu** | Snackbar succès ; bouton devient **Partager facture acompte** |
+| **P / F / N / B** | |
+| **Remarques** | N/A si devis sans acompte |
+
+### TC-FAC-002 — Partager facture acompte
+
+| | |
+| --- | --- |
+| **Prérequis** | TC-FAC-001 Pass |
+| **Étapes** | 1. **Partager facture acompte** |
+| **Résultat attendu** | Feuille de partage OS (mock : URL fictive), pas de crash |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-FAC-003 — Facture solde refusée (chantier non terminé)
+
+| | |
+| --- | --- |
+| **Prérequis** | Devis accepté, chantier **non terminé** |
+| **Étapes** | 1. Fiche client → **Facture solde** |
+| **Résultat attendu** | Message d'erreur explicite (chantier doit être terminé) |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-FAC-004 — Facture solde après chantier terminé
+
+| | |
+| --- | --- |
+| **Prérequis** | Chantier Dubois **Terminé** (TC-CHA-007) |
+| **Étapes** | 1. Fiche Dubois → **Facture solde** → **Partager** |
+| **Résultat attendu** | Facture générée, montant = TTC − acompte, partage OK |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-FAC-005 — Bottom sheet facturation (Mes Chantiers)
+
+| | |
+| --- | --- |
+| **Prérequis** | Chantier en cours |
+| **Étapes** | 1. Mes Chantiers → passer **Terminé**<br/>2. Utiliser le bottom sheet **Facturer le chantier** |
+| **Résultat attendu** | Génération acompte et/ou solde + partage PDF depuis la feuille |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-FAC-006 — Idempotence facture acompte
+
+| | |
+| --- | --- |
+| **Prérequis** | Facture acompte déjà générée |
+| **Étapes** | 1. Regénérer **Facture acompte** |
+| **Résultat attendu** | Pas de doublon ; retour immédiat vers partage |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+---
+
+## Phase 10 — Logging et diagnostic (Niveau 1)
 
 Référence : [Logging et diagnostic](/artdevis/exploitation/logging-et-diagnostic)
 
@@ -717,9 +840,19 @@ Référence : [Logging et diagnostic](/artdevis/exploitation/logging-et-diagnost
 | **P / F / N / B** | |
 | **Remarques** | |
 
+### TC-LOG-007 — Log génération facture PDF
+
+| | |
+| --- | --- |
+| **Prérequis** | Mode debug, facture générée (phase 9) |
+| **Étapes** | 1. Générer une facture acompte ou solde<br/>2. Filtrer console `[ArtDevis]` |
+| **Résultat attendu** | Log `"action":"creerFactureAcompte"` ou `"creerFactureSolde"` / `"generatePdf"`, `"level":"info"` |
+| **P / F / N / B** | |
+| **Remarques** | |
+
 ---
 
-## Phase 9 — Smoke prod (optionnel)
+## Phase 11 — Smoke prod (optionnel)
 
 Exécuter sur [artdevis.vercel.app](https://artdevis.vercel.app) après validation mock.
 
@@ -730,6 +863,7 @@ Exécuter sur [artdevis.vercel.app](https://artdevis.vercel.app) après validati
 | TC-PROD-03 | Accepté → Mes Chantiers (Pro) | | |
 | TC-PROD-04 | Navigation date + Reporter chantier (Pro) | | |
 | TC-PROD-05 | Client a annulé → retrait agenda | | |
+| TC-PROD-06 | Facture solde après chantier terminé (Pro) | | |
 
 ---
 
@@ -744,9 +878,11 @@ Exécuter sur [artdevis.vercel.app](https://artdevis.vercel.app) après validati
 | 5 — Tarifs | 5 | | | | |
 | 6 — R2b | 14 | | | | |
 | 7 — Chantiers | 13 | | | | |
-| 8 — Logging | 6 | | | | |
-| 9 — Smoke prod | 5 | | | | |
-| **Total** | **69** | | | | |
+| 8 — Veille | 5 | | | | |
+| 9 — Factures | 6 | | | | |
+| 10 — Logging | 7 | | | | |
+| 11 — Smoke prod | 6 | | | | |
+| **Total** | **82** | | | | |
 
 ### Bugs ouverts
 

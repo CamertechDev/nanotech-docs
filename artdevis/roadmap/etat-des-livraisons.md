@@ -12,10 +12,10 @@ title: État des livraisons
 | Devis vocal | Livré | MVP 1.3, mock et prod |
 | Flux France R1-R3 | Livré | Contrôle, traduction, acompte |
 | Relation client R2b | Livré | Partage, marquer envoyé, verrouillage |
-| Chantiers | Livré | Planning jour J, trajets simulés |
+| Chantiers | Livré | Navigation date, report, facturation à la clôture |
 | Catalogue tarifs | Livré | Référentiel fixe + tarifs privés |
-| Veille | Coquille | UI démo uniquement |
-| Facturation | Phase 2 | Non démarrée |
+| Veille | MVP mock | Alertes démo, actions SMS, badge dynamique |
+| Factures acompte / solde | Livré | PDF + partage, Edge Function `generer-pdf-facture` |
 | Email auto Resend | Code livré | Désactivé en prod |
 
 ## Releases produit (France)
@@ -27,6 +27,8 @@ title: État des livraisons
 | R3 | Paramètres acompte + bloc PDF | Livré |
 | R2b | Historique client enrichi | Livré |
 | Logging N1 | AppLogger + logs Edge Functions | Livré |
+| Factures MVP | Acompte / solde PDF | Livré |
+| Veille MVP | Repository + cubit mock | Livré |
 
 ## Backlog prioritaire
 
@@ -42,12 +44,13 @@ title: État des livraisons
 * Google Maps pour temps de route réels
 * Brancher disponibilités artisan au planning
 * Import CSV tarifs fournisseurs (scénario hybride)
-* Déploiement PDF prod validé bout en bout
+* Validation E2E facture solde après chantier terminé
+* Déploiement `generer-pdf-facture` + migration `20260835_factures.sql`
 
 ### P2 (Phase 2)
 
-* Veille et entretien fonctionnelle (`equipements_installes`)
-* Facturation et Factur-X
+* Veille et entretien données réelles (`equipements_installes`)
+* Factur-X et paiement en ligne
 * Lien web Accepter/Refuser pour le client
 * Assignation technicien, multi-jours, OR-Tools
 * International Espagne et Royaume-Uni

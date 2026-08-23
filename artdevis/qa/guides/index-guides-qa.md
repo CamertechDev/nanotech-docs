@@ -18,7 +18,9 @@ Les **campagnes de tests** ([Campagne onboarding août 2026](/artdevis/qa/campag
 | 5 | [Tarifs fournisseurs](/artdevis/qa/guides/tarifs-fournisseurs) | TC-TAR-xxx |
 | 6 | [Relation client R2b](/artdevis/fonctionnel/relation-client) | TC-R2B-xxx |
 | 7 | [Chantiers](/artdevis/fonctionnel/chantiers-et-veille) | TC-CHA-xxx |
-| 8 | [Logging](/artdevis/exploitation/logging-et-diagnostic) | TC-LOG-xxx |
+| 8 | [Veille MVP](/artdevis/fonctionnel/chantiers-et-veille) | TC-VEI-xxx |
+| 9 | [Factures](/artdevis/fonctionnel/factures) | TC-FAC-xxx |
+| 10 | [Logging](/artdevis/exploitation/logging-et-diagnostic) | TC-LOG-xxx |
 
 ## Captures d'écran
 

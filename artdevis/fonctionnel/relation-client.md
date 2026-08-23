@@ -1,13 +1,24 @@
 ---
 sidebar_position: 3
 title: Relation client
+description: Flux devis, partage PDF, acceptation, planification chantier et facturation.
 ---
 
 ## Principe
 
 L'artisan **crée et transmet** le devis. Le **client n'utilise pas l'application**. La relation se déroule via PDF, téléphone, WhatsApp ou email.
 
-## Parcours complet
+## Parcours complet (MVP août 2026)
+
+```
+Fiche client / Assistant IA → Devis vocal → PDF
+        ↓
+Partager PDF · Marquer envoyé
+        ↓
+Accepté / Refusé (réponse client hors app)
+        ↓
+Si Accepté → Mes Chantiers → Terminé → Factures → Partager
+```
 
 | Étape | Dans l'app | Hors app |
 | --- | --- | --- |
@@ -16,7 +27,7 @@ L'artisan **crée et transmet** le devis. Le **client n'utilise pas l'applicatio
 | 3 | **Marquer envoyé** → statut `envoye` + date | — |
 | 4 | — | Client **répond** (tel, WhatsApp, mail) |
 | 5 | **Accepté** ou **Refusé** sur la fiche client | — |
-| 6 | Si accepté → **Mes Chantiers** (planification auto) | — |
+| 6 | Mes Chantiers → clôture → **Factures** acompte/solde | Encaissement manuel |
 
 ## Actions sur l'historique (fiche client)
 
@@ -27,6 +38,8 @@ L'artisan **crée et transmet** le devis. Le **client n'utilise pas l'applicatio
 | **Ouvrir le devis** (tap ligne) | Tous statuts | Édition si brouillon, consultation seule si accepté/refusé |
 | **Remettre en brouillon** | Depuis accepté/refusé | Déverrouille l'édition des lignes |
 | **Planifier le chantier** | Devis accepté | Crée ou retrouve l'entrée **Mes Chantiers** (relance manuelle) |
+| **Client a annulé** | Devis accepté | Statut `annule`, retrait du chantier dans l'agenda |
+| **Facture acompte / solde** | Devis accepté | Voir [Factures](./factures) |
 | **Accepté / Refusé** | Brouillon ou envoyé | Décision artisan après retour client |
 
 ## Renvoi et relance client
@@ -48,21 +61,18 @@ L'artisan **crée et transmet** le devis. Le **client n'utilise pas l'applicatio
 Le partage manuel est retenu en production tant que Resend n'est pas configuré. L'email automatique reste activable sans refonte.
 :::
 
-## Consultation des devis verrouillés
-
-Un devis **accepté** ou **refusé** s'ouvre en **lecture seule**. L'artisan peut consulter les lignes et le total, puis choisir **Remettre en brouillon** pour modifier à nouveau.
-
-## Planification chantier manuelle
-
-Si la planification automatique a échoué (migration absente, erreur réseau, devis accepté avant déploiement du module Chantiers), le bouton **Planifier le chantier** sur un devis accepté relance la création dans la table `agenda`.
-
 ## Test rapide (5 minutes)
 
 1. Connexion mock ou prod avec compte Pro
 2. Client → Devis vocal → PDF → Partager
 3. Fiche client → Marquer envoyé → vérifier la date
-4. Partager PDF depuis l'historique (simulation renvoi)
-5. Accepté → onglet Mes Chantiers
-6. Rouvrir un devis accepté → consultation seule → Remettre en brouillon si besoin
+4. Accepté → Mes Chantiers → Terminé → facture solde → Partager
+5. Rouvrir un devis accepté → consultation seule
 
 Production : [artdevis.vercel.app](https://artdevis.vercel.app)
+
+## Documents liés
+
+* [Factures](./factures)
+* [Chantiers et veille](./chantiers-et-veille)
+* [Campagne QA](../qa/campagnes/2026-08-release-r2b) — phases 6, 9
