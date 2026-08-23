@@ -49,7 +49,7 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 
 **Architecture**
 * [Clean Architecture](./architecture/clean-architecture)
-* [Stack et backend Supabase](./architecture/stack-et-backend)
+* [Stack, BaaS, IA et modèle de données](./architecture/stack-et-backend)
 
 **Fonctionnel**
 * [Flux devis France](./fonctionnel/flux-devis-france)
@@ -68,4 +68,6 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [État des livraisons](./roadmap/etat-des-livraisons)
 
 **Tests QA**
-* [Campagne R2b (août 2026)](./qa/campagnes/2026-08-release-r2b)
+* [Index guides QA](./qa/guides/index-guides-qa)
+* [Devis vocal (guide QA)](./qa/guides/devis-vocal)
+* [Campagne onboarding (août 2026)](./qa/campagnes/2026-08-release-r2b)

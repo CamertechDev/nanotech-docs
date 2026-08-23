@@ -1,0 +1,9 @@
+{
+  "label": "Guides fonctionnels",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Guides fonctionnels QA",
+    "description": "Comment saisir chaque écran avant d'exécuter les campagnes de tests."
+  }
+}
