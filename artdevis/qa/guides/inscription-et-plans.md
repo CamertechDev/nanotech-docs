@@ -18,7 +18,7 @@ Fichier à déposer : `static/img/artdevis/qa/auth-login.png` (voir [Captures d'
 | Champ | Obligatoire | Règle | Exemple QA |
 | --- | --- | --- | --- |
 | **Nom de l'entreprise** | Oui | Texte non vide | `Plomberie QA Test` |
-| **SIRET** | Oui | **14 chiffres** exactement | `12345678901234` |
+| **SIRET** | Oui | **14 chiffres** exactement | `12345678901234` ou `00000000000000` (reviewer stores) |
 | **Email** | Oui | Format email valide | `qa+001@test.fr` |
 | **Mot de passe** | Oui | Minimum **6 caractères** | `password123` |
 
@@ -39,6 +39,10 @@ Dans ArtDevis :
 :::tip Tests négatifs SIRET
 * 13 ou 15 chiffres → message d'erreur, inscription refusée
 * Lettres ou espaces → refusé
+:::
+
+:::info Reviewer App Store / Play Store
+SIRET fictif accepté : **`00000000000000`** (14 chiffres, pas de contrôle Luhn). Voir [Conformité stores](/artdevis/exploitation/conformite-app-stores).
 :::
 
 ## Après inscription
@@ -64,6 +68,10 @@ Fichier à déposer : `static/img/artdevis/qa/plans-comparatif.png`
 
 Sur l'écran inscription, lien **Voir les formules…** → ouvre une feuille comparatif **Base / Professionnel**.
 
+:::warning iOS (App Store)
+Sur **iPhone/iPad (build natif)**, ce lien est **masqué** (règle Apple 3.1.1 — pas de prix abonnement in-app). Tester sur Web ou Android pour TC-AUTH plans, ou voir [Checklist TC-STORE](/artdevis/qa/conformite-stores-checklist).
+:::
+
 :::warning MVP août 2026
 Le changement de plan depuis cette feuille est une **simulation** (pas de paiement Stripe). Pour tester le plan **Pro** sans payer : utiliser `pro@plomberie.fr` ou simuler l'upgrade depuis **Profil → Mon abonnement**.
 :::
@@ -74,6 +82,10 @@ Le changement de plan depuis cette feuille est une **simulation** (pas de paieme
 | --- | --- |
 | Email | celui créé à l'inscription |
 | Mot de passe | celui défini à l'inscription |
+
+Compte reviewer documenté : `julien@plomberie.fr` / `password123` (saisie manuelle en **release**, pré-rempli en debug uniquement).
+
+Suppression de compte : **Profil → Supprimer mon compte et mes données** ([détail](/artdevis/exploitation/conformite-app-stores)).
 
 Après connexion : onglet **Clients** (accueil).
 

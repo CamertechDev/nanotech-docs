@@ -21,6 +21,9 @@ Les **campagnes de tests** ([Campagne onboarding août 2026](/artdevis/qa/campag
 | 8 | [Veille MVP](/artdevis/fonctionnel/chantiers-et-veille) | TC-VEI-xxx |
 | 9 | [Factures](/artdevis/fonctionnel/factures) | TC-FAC-xxx |
 | 10 | [Logging](/artdevis/exploitation/logging-et-diagnostic) | TC-LOG-xxx |
+| 11 | [Conformité stores](/artdevis/qa/conformite-stores-checklist) | TC-STORE-xxx |
+
+Avant soumission App Store / Play Store, exécuter en priorité le guide **Conformité stores** (build release iOS requis pour les cas abonnements).
 
 ## Captures d'écran
 
@@ -40,3 +43,5 @@ Voir [Ajouter des captures d'écran](/artdevis/qa/guides/captures-ecran) pour la
 | `pro@plomberie.fr` | `password123` | Pro | Équipe, tarifs, chantiers |
 
 Pour tester l'inscription, utiliser un **email jamais utilisé** (ex. `qa-test+001@votredomaine.fr`).
+
+SIRET reviewer stores : **`00000000000000`**. Voir [Conformité App Store](/artdevis/exploitation/conformite-app-stores).

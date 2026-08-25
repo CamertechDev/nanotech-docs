@@ -62,6 +62,7 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 **Exploitation**
 * [Développement et tests](./exploitation/developpement-et-tests)
 * [Guide QA](./exploitation/guide-qa)
+* [Conformité App Store / Play Store](./exploitation/conformite-app-stores)
 * [Logging et diagnostic](./exploitation/logging-et-diagnostic)
 * [Déploiement](./exploitation/deploiement)
 
@@ -70,5 +71,6 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 
 **Tests QA**
 * [Index guides QA](./qa/guides/index-guides-qa)
+* [Conformité stores (checklist TC-STORE)](./qa/conformite-stores-checklist)
 * [Devis vocal (guide QA)](./qa/guides/devis-vocal)
 * [Campagne onboarding (août 2026)](./qa/campagnes/2026-08-release-r2b)
