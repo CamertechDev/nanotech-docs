@@ -49,7 +49,7 @@ Sur **Web / Android** : TC-STORE-002, 004, 008 vérifient que prix et simulation
 | TC-STORE-020 | Profil patron | Bouton rouge visible |
 | TC-STORE-021 | Super-admin | Bouton absent |
 | TC-STORE-023 | Compte jetable prod | Suppression + redirect login |
-| TC-STORE-024 | Patron + équipe active | Erreur, désactiver équipe d'abord |
+| TC-STORE-024 | Patron + équipe active | Erreur 409 ; Mon Équipe → ⋮ Retirer de l'équipe, puis réessayer |
 
 ---
 

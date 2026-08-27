@@ -28,7 +28,24 @@ Fichier à déposer : `static/img/artdevis/qa/equipe-liste.png`
 
 * Filtres : **Tous**, **Actifs**, **Inactifs**
 * Carte membre : nom, email, statut, puces compétences
-* Interrupteur : activer / désactiver (soft delete, pas de suppression définitive)
+* **Switch** : activer / désactiver rapidement
+* Menu **⋮** → **Retirer de l'équipe** : désactivation avec confirmation (recommandé avant suppression compte patron)
+
+### Retirer un membre de l'équipe
+
+| Action | Effet |
+| --- | --- |
+| **Retirer de l'équipe** (menu ⋮) | Dialogue de confirmation → membre **inactif** (`statut_compte = suspendu`) |
+| **Switch OFF** | Même effet, sans dialogue |
+| Réactivation | Filtre **Inactifs** → switch ON ou édition |
+
+:::warning Avant suppression compte patron
+Tous les membres **actifs** doivent être retirés (ou désactivés) sinon `supprimer-compte` renvoie une erreur 409.
+:::
+
+:::info Suppression compte opérateur
+Le patron **ne supprime pas** le login Auth de l'opérateur invité. L'opérateur utilise **Profil → Supprimer mon compte** sur son appareil (conformité App Store 5.1.1(v)).
+:::
 
 ## Formulaire membre (ajout / édition)
 
