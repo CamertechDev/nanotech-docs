@@ -59,6 +59,14 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [Factures (acompte et solde)](./fonctionnel/factures)
 * [Catalogue et tarifs fournisseurs](./fonctionnel/catalogue-fournisseurs)
 
+**Guide utilisateur** *(artisans)*
+* [Premiers pas](./guide-utilisateur/premiers-pas)
+* [Clients et devis vocal](./guide-utilisateur/clients-et-devis-vocal)
+* [Envoyer un devis au client](./guide-utilisateur/envoyer-au-client)
+* [Chantiers et factures](./guide-utilisateur/chantiers-et-factures)
+* [Mon équipe](./guide-utilisateur/mon-equipe)
+* [Profil et compte](./guide-utilisateur/profil-et-compte)
+
 **Exploitation**
 * [Développement et tests](./exploitation/developpement-et-tests)
 * [Guide QA](./exploitation/guide-qa)

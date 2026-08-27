@@ -7,6 +7,10 @@ title: Index des guides QA
 
 Ces guides expliquent **comment remplir chaque écran** pour que le QA soit autonome sans demander au PO ou au dev à chaque étape.
 
+:::tip Artisans et utilisateurs finaux
+Pour un **mode d'emploi métier** (sans cas de test TC-xxx), voir la section [Guide utilisateur](/artdevis/guide-utilisateur/premiers-pas).
+:::
+
 Les **campagnes de tests** ([Campagne onboarding août 2026](/artdevis/qa/campagnes/2026-08-release-r2b)) suivent **le même ordre** que ces guides.
 
 | Ordre | Guide | Campagne associée |

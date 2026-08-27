@@ -1,0 +1,9 @@
+{
+  "label": "Guide utilisateur",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Guide utilisateur ArtDevis",
+    "description": "Mode d'emploi pour les artisans : inscription, clients, devis vocal, chantiers et profil."
+  }
+}
