@@ -204,10 +204,10 @@ Guide : [Devis vocal](/artdevis/qa/guides/devis-vocal) · Mode **mock** recomman
 
 | | |
 | --- | --- |
-| **Étapes** | 1. Terminer la dictée (mock)<br/>2. Attendre fin du traitement (~3 s) |
+| **Étapes** | 1. Terminer la dictée (mock, **après 3 s**)<br/>2. Attendre fin du traitement (~3 s) |
 | **Résultat attendu** | Écran contrôle avec lignes de devis, totaux TTC visibles |
 | **P / F / N / B** | |
-| **Remarques** | |
+| **Remarques** | Scénario selon le client (TC-VOC-011) |
 
 ### TC-VOC-003 — Valider pour le client (traduction FR)
 
@@ -262,6 +262,75 @@ Guide : [Devis vocal](/artdevis/qa/guides/devis-vocal) · Mode **mock** recomman
 | **Résultat attendu** | Même flux que TC-VOC-001 à 007 |
 | **P / F / N / B** | |
 | **Remarques** | |
+
+### TC-VOC-009 — Terminer inactif avant 3 secondes
+
+| | |
+| --- | --- |
+| **Prérequis** | `USE_MOCK=true`, écran enregistrement |
+| **Étapes** | 1. Démarrer l'enregistrement<br/>2. Observer **Terminer** avant 3 s, puis après |
+| **Résultat attendu** | Bouton inactif avant 3 s, actif ensuite |
+| **P / F / N / B** | |
+| **Remarques** | Anti-clic / anti-poche |
+
+### TC-VOC-010 — Consignes protocole (1ʳᵉ visite + rappel)
+
+| | |
+| --- | --- |
+| **Étapes** | 1. Premier enregistrement (nouvel appareil ou prefs vides)<br/>2. Lire **Comment dicter un devis** → *J'ai compris*<br/>3. Vérifier le rappel sous le micro |
+| **Résultat attendu** | Ouverture **Nouveau devis**, clôture **Génère devis**, rappel à chaque enregistrement |
+| **P / F / N / B** | |
+| **Remarques** | Carte courte aussi à l'inscription |
+
+### TC-VOC-011 — Mock aligné sur le client
+
+| | |
+| --- | --- |
+| **Prérequis** | `USE_MOCK=true` |
+| **Étapes** | 1. Fiche **Mme Claire Dubois** → dictée mock → siphon / fuite évier<br/>2. Fiche **Mme Sophie Dupont** → dictée mock → chauffe-eau Thermor |
+| **Résultat attendu** | Chantier mock = client ouvert ; le nom n'est pas inventé par l'IA |
+| **P / F / N / B** | |
+| **Remarques** | Luc = mitigeur FR ; SARL = WC pro TVA 20 % |
+
+### TC-VOC-012 — Historique : un seul bloc d'actions ouvert
+
+| | |
+| --- | --- |
+| **Prérequis** | Client avec ≥ 2 devis (seed + brouillon de TC-VOC-007) |
+| **Étapes** | 1. Fiche client, historique<br/>2. Observer les tuiles<br/>3. Déplier un devis plus ancien (bouton pliant) |
+| **Résultat attendu** | Le plus récent a Partager PDF visible ; les autres repliés ; cible tactile large |
+| **P / F / N / B** | |
+| **Remarques** | |
+
+### TC-VOC-013 — Refus protocole (prod uniquement)
+
+| | |
+| --- | --- |
+| **Prérequis** | `USE_MOCK=false`, Edge Function `devis-vocal` déployée avec contrôle protocole |
+| **Étapes** | 1. Dicter sans les 2 phrases (ex. « je veux des bonbons »), ≥ 3 s<br/>2. Attendre le traitement |
+| **Résultat attendu** | Message métier (pas NetworkError) : **Nouveau devis** … **Génère devis**. Aucun brouillon |
+| **P / F / N / B** | |
+| **Remarques** | **N/A en mock** : le mock entoure toujours le protocole |
+
+### TC-VOC-014 — Compléter par la voix (même brouillon)
+
+| | |
+| --- | --- |
+| **Prérequis** | `USE_MOCK=true` ; brouillon ouvert (après TC-VOC-002 ou **Modifier** depuis l'historique) |
+| **Étapes** | 1. Écran 5a : bouton **Compléter par la voix** (sous « Ajouter une ligne manuelle »)<br/>2. Dicter ≥ 3 s → Terminer<br/>3. Attendre le traitement<br/>4. Ouvrir un devis **Accepté** (ex. seed Dubois) |
+| **Résultat attendu** | Même `devis.id` ; lignes **cuisine** ajoutées à la suite (mock) ; totaux recalculés ; retour au contrôle (5a). Devis accepté : **pas** de bouton micro |
+| **P / F / N / B** | |
+| **Remarques** | Annuler pendant l'enregistrement restaure le brouillon sans perte. Prod : 2ᵉ dictée conforme au protocole |
+
+### TC-VOC-015 — Photos chantier (patron, max 2, hors PDF)
+
+| | |
+| --- | --- |
+| **Prérequis** | `USE_MOCK=true` ; brouillon ouvert (Écran 5a) |
+| **Étapes** | 1. Section **Photos du chantier (0/2)** sous la dictée<br/>2. Ajouter 2 photos (galerie ou caméra)<br/>3. Tenter une 3ᵉ<br/>4. Générer le PDF (Écran 6)<br/>5. Ouvrir un devis **Accepté** |
+| **Résultat attendu** | 2 miniatures, plein écran au tap ; 3ᵉ refusée ; PDF **sans** photos ; devis accepté : aperçu sans bouton Ajouter |
+| **P / F / N / B** | |
+| **Remarques** | Pas de photo par ligne. Pas d'upload employé (hors scope). Prod : `supabase db push` + bucket `photos-chantiers` |
 
 ---
 

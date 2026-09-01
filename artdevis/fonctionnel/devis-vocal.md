@@ -3,9 +3,11 @@ sidebar_position: 2
 title: Devis vocal
 ---
 
+> **Spec code :** dépôt ArtDevis `docs/USECASE-DEVIS-VOCAL.md` · **PO :** `docs/USECASE-PO-DEVIS-VOCAL.md` · **Backend :** `docs/DEVISVOCAL.MD`
+
 ## En une phrase
 
-L'artisan **dicte** l'intervention, l'IA produit un **devis brouillon** (avec ses tarifs négociés si configurés), il **relit**, **génère un PDF** et le **partage** au client.
+L'artisan **dicte** l'intervention (rituel `Nouveau devis` … `Génère devis`), l'IA produit un **devis brouillon** (avec ses tarifs négociés si configurés), il **relit**, peut **compléter par la voix** le même brouillon, y joindre **jusqu'à 2 photos techniques** (hors PDF), **génère un PDF** et le **partage** au client.
 
 ## Parcours applicatif
 
@@ -21,13 +23,38 @@ Client sélectionné → Dictée → Analyse IA → Édition brouillon → PDF �
 L'IA ne choisit jamais le client. L'artisan le sélectionne avant de lancer la dictée.
 :::
 
+## Protocole vocal (lot A — livré)
+
+Ce n'est **pas** un mot de passe. Tous les artisans dictent les **mêmes** deux phrases (français), même si le métier est en arabe ou en portugais.
+
+| Borne | Phrase |
+| --- | --- |
+| Ouverture | **Nouveau devis** |
+| Clôture | **Génère devis** (variantes : générer / genere le devis) |
+
+| Si… | Alors… |
+| --- | --- |
+| Durée &lt; 3 s | Pas d'upload, pas d'OpenAI ; **Terminer** inactif |
+| Les deux phrases absentes (après Whisper) | **STOP** : pas de GPT, pas de brouillon. État `ProtocolVocalRefuse` (**pas** `NetworkError`) |
+| Les deux bornes présentes | GPT structure les lignes ; Flutter persiste |
+
+L'artisan l'apprend à l'**inscription**, à la **1ʳᵉ dictée** (écran « Comment dicter un devis ») et via un **rappel sous le micro** à chaque enregistrement.
+
+:::warning Production
+Redéployer l'Edge Function `devis-vocal` pour le contrôle après Whisper (HTTP 422, `code: protocole_vocal`). Le mock Flutter entoure déjà les dictées.
+:::
+
+**Lot B ✅ :** bouton **Compléter par la voix** sur le brouillon — mêmes lignes, **même** `devis.id`, pas d'INSERT Edge Function. Mock : 3 lignes cuisine. Devis verrouillé (accepté / refusé / annulé) : pas de bouton.
+
+**Photos chantier (patron) ✅ :** jusqu'à **2 photos** techniques dans l'éditeur (caméra ou galerie). **Jamais** sur le PDF ni l'e-mail client. Pas d'upload par un salarié (hors scope pour l'instant).
+
 ## Écrans du flux (3 à 6)
 
 | Écran | Page | Rôle |
 | --- | --- | --- |
-| 3 | Enregistrement | Capture audio, timer, contrôle micro |
-| 4 | Traitement | Upload, transcription, analyse, barre de progression |
-| 5 | Éditeur brouillon | Lignes, TVA, totaux temps réel, validation client |
+| 3 | Enregistrement | Capture audio, timer ≥ 3 s, consignes protocole, contrôle micro |
+| 4 | Traitement | Upload, Whisper, **contrôle protocole**, GPT, prix |
+| 5 | Éditeur brouillon | Lignes, TVA, totaux, **Compléter par la voix**, **photos 0/2**, validation client |
 | 6 | Aperçu PDF | Génération, partage, fin de flux |
 
 La navigation entre ces écrans utilise `Navigator.push` avec transmission du `VoiceDevisBloc` via `BlocProvider.value`.
@@ -39,15 +66,17 @@ La navigation entre ces écrans utilise `Navigator.push` avec transmission du `V
 * `Recording`, `Uploading`, `Transcribing`, `Analyzing`, `BuildingPrices`
 * `DraftReadyControle`, `DraftReadyClient`
 * `GeneratingPdf`, `SendingEmail`, `PdfReady`
-* `NetworkError` (avec relance possible)
+* `NetworkError` (panne réseau / backend, relance possible)
+* `ProtocolVocalRefuse` (rituel manquant — message métier, **pas** de retry réseau)
 
-Toute erreur du pipeline aboutit à **NetworkError** avec message en français. L'audio uploadé est conservé pour permettre une relance.
+Toute **erreur technique** du pipeline aboutit à **NetworkError** (français, audio conservé). Un refus de protocole n'est **pas** une panne réseau.
 
 ## Backend (Edge Function `devis-vocal`)
 
 | Étape | Technologie |
 | --- | --- |
 | Transcription | OpenAI Whisper |
+| Contrôle protocole | Après Whisper, avant GPT — 422 `protocole_vocal` si bornes absentes |
 | Analyse et structuration | GPT-4o-mini, JSON strict |
 | Catalogue | Matching sur ~40 produits seedés |
 | Tarifs B2B | Injection des tarifs artisan (20 max) |
@@ -58,32 +87,51 @@ Toute erreur du pipeline aboutit à **NetworkError** avec message en français. 
 
 * Génération du document avec totaux, validité, bloc acompte si applicable
 * Upload dans le bucket `devis-pdf`
-* Retour de l'URL publique au client Flutter
+* Retour de l'URL au client Flutter
+* Les **photos chantier** (`photos_devis` / bucket `photos-chantiers`) **ne sont pas** lues : supervision interne uniquement
+
+## Photos du chantier (patron)
+
+| Règle | Détail |
+| --- | --- |
+| Plafond | **2 photos par devis** (UI + trigger SQL) |
+| Qui | Patron connecté (`artisan_id` du devis = `auth.uid()`) |
+| Où | Écran 5, sous la transcription |
+| Compression | `maxWidth` 1280, qualité 50, refus si &gt; 500 Ko |
+| Storage | Bucket **privé** `photos-chantiers`, URL signée (comme `logos`, pas comme `audio-devis`) |
+| Purge | Suppression de compte (`supprimer-compte`) ; cron 30 j **non livré** |
+| Équipe | Salarié terrain → patron bureau : **plus tard** (login employé + RLS partagée) |
+
+Migration : `supabase/migrations/20260901_photos_devis.sql` — `supabase db push` en prod.
 
 ## Livré (MVP 1.3)
 
 | Zone | Détail |
 | --- | --- |
-| Application | 6 écrans, retry réseau, réouverture brouillon, historique |
+| Application | 6 écrans, retry réseau, réouverture brouillon, historique, photos 0/2 |
 | Backend | Pipeline Whisper + GPT complet |
 | Intelligence | Nettoyage dictée, matching catalogue, injection tarifs |
-| Tests | Bloc, pages, assistant + banc QA HTML |
-| Mock | Scénario plomberie en 3 secondes sans OpenAI |
+| Tests | Bloc, pages, assistant, photos + banc QA HTML |
+| Mock | Un scénario **par client seed** (voir ci-dessous), protocole inclus, sans OpenAI |
+| Protocole | Parseur Dart + TS, 3 s, onboarding, `ProtocolVocalRefuse` |
+| Multi-dictée | `AppendVoiceFromRecording`, concat lignes, payload `lignes_existantes` |
+| Photos | Table `photos_devis`, bucket privé, hors PDF |
 
 ## Reste à faire
 
 | Priorité | Item |
 | --- | --- |
-| P0 | Sélecteur TVA contraint (20 / 10 / 5,5), aujourd'hui saisie libre |
-| P0 | Validation production bout en bout (dictée mobile réelle) |
+| P0 | Validation production bout en bout (dictée mobile réelle + Edge Function déployée) |
+| P0 | `supabase db push` photos + redéploiement `supprimer-compte` |
 | P1 | Stepper quantité, déploiement PDF prod validé |
-| P2 | Waveform micro, pgvector catalogue, re-dictée sur brouillon |
+| P2 | Waveform micro, pgvector catalogue |
+| Plus tard | Photos par un salarié ; cron purge 30 j après statut terminal |
 
 ## Modes de test
 
 | Mode | Public | Méthode |
 | --- | --- | --- |
-| **Mock** | PO, testeur web | `USE_MOCK=true`, micro simulé |
+| **Mock** | PO, testeur web | `USE_MOCK=true`, scénario selon le **client ouvert** |
 | **Mobile réel** | Artisan, PO | Application Android/iOS, vraie dictée |
 | **Banc QA** | Technique | `qa-test-bench.html`, backend seul |
 
@@ -91,14 +139,32 @@ Toute erreur du pipeline aboutit à **NetworkError** avec message en français. 
 Sur Chrome sans mock, le micro peut échouer (`_Namespace`). Comportement attendu, utiliser le mock ou un appareil mobile pour les tests vocaux.
 :::
 
+## Clients mock et chantiers types
+
+En `USE_MOCK=true`, la dictée **ne tourne plus** FR / AR / EN / TR au hasard. Elle suit le client de la fiche :
+
+| Client seed | Id | Historique seed | Dictée mock |
+| --- | --- | --- | --- |
+| Mme Claire Dubois | `client-dubois` | Devis **accepté** (fuite évier) | Siphon + PER 16, FR |
+| Mme Sophie Dupont | `1` | **Brouillon** chauffe-eau | Ballon Thermor, FR |
+| M. Bernard Luc | `2` | **Envoyé** mitigeur | Mitigeur douche, FR |
+| SARL Plomberie Pro | `3` | **Refusé** WC pro | WC suspendus, TVA 20 % |
+
+Un id inconnu (tests `client-1`) conserve le cycle langues R1.
+
 ## Démo rapide (mock, 5 minutes)
 
 1. Connexion `julien@plomberie.fr` / `password123`
-2. Client → Dictée → Terminer → brouillon
-3. Modifier un prix, vérifier le total TTC
-4. PDF → Partager → Fiche client → Accepté
+2. Ouvrir **Dupont** → Dictée (attendre 3 s) → Terminer → brouillon chauffe-eau
+3. Modifier un prix, vérifier le total TTC ; **Compléter par la voix** (mock : lignes cuisine)
+4. **Photos du chantier (0/2)** → 2 photos (hors PDF)
+5. PDF → Partager → Fiche client → historique (nouveau brouillon + seed)
 
-## Promt de teste
+## Prompts de test
+
+:::warning Protocole (prod)
+Préfixer **Nouveau devis.** et terminer par **Génère devis.** En mock, c'est déjà inclus.
+:::
 
 ### 🟢 CATEGORIE 1 : Prompts Simples (Courants & Rapides)
 1.1. Changement de Robinet de Cuisine (Le classique 10 secondes)

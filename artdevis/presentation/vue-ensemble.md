@@ -10,7 +10,7 @@ ArtDevis cible les **artisans indépendants et petites équipes** qui perdent du
 L'application combine :
 
 * un **agenda** et une **gestion des clients** ;
-* un **assistant vocal** pour produire des devis à partir d'une dictée ;
+* un **assistant vocal** pour produire des devis à partir d'une dictée, éventuellement **complétés** par une 2ᵉ dictée et **2 photos techniques** (hors PDF client) ;
 * un suivi des **chantiers du jour** après acceptation d'un devis ;
 * une section **veille et entretien** (Phase 2) ;
 * un **cockpit admin** pour la suspension de comptes.

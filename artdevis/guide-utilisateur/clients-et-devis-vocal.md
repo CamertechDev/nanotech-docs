@@ -46,13 +46,14 @@ Les deux mènent au **même parcours**.
 
 ### Étape 1 — Enregistrer
 
+- À la **première** dictée : lisez **Comment dicter un devis**, puis *J'ai compris*
+- Dites **« Nouveau devis »**, décrivez l'intervention, puis **« Génère devis »**
 - Appuyez sur le micro pour **démarrer**
-- Décrivez l'intervention : travaux, matériaux, quantités…
-- Vous pouvez dicter **dans votre langue** (français, arabe, portugais…)
-- Appuyez sur **Terminer** quand c'est fini
+- Attendez **3 secondes** avant **Terminer** (évite les enregistrements vides)
+- Vous pouvez décrire les travaux **dans votre langue** (français, arabe, portugais…) — les deux phrases du rituel restent en français
 
 :::tip Autorisation micro
-Sur téléphone, acceptez l'accès au **microphone** lorsque l'app le demande.
+Sur téléphone, acceptez l'accès au **microphone** lorsque l'app le demande. Pour les photos du chantier : **caméra** ou **galerie**.
 :::
 
 ### Étape 2 — Traitement automatique
@@ -66,6 +67,8 @@ En cas d'erreur réseau : bouton **Réessayer** (votre enregistrement est conser
 Relisez chaque ligne : description, quantité, prix, TVA.
 
 - Modifiez si besoin
+- **Compléter par la voix** : 2ᵉ dictée sur **le même** devis (ex. autre pièce)
+- **Photos du chantier (0/2)** : photos techniques de l'installation (pas de personnes ni d'objets perso). Elles **n'apparaissent pas** sur le PDF client
 - Appuyez sur **Valider pour le client** → traduction en **français** pour le PDF
 
 Les totaux HT, TVA et TTC se recalculent automatiquement.
@@ -95,6 +98,8 @@ Sans tarif configuré : le devis est quand même créé avec des prix génériqu
 | Bruit sur le chantier | Parlez près du téléphone, listez clairement matériaux et main-d'œuvre |
 | Dictée en langue étrangère | Normal — le client recevra un PDF en français |
 | Doute sur un montant | Corrigez à l'étape de contrôle avant le PDF |
+| Oubli du rituel | L'app refuse la dictée : dites **Nouveau devis** au début et **Génère devis** à la fin |
+| Photos du logement | Cadrez **uniquement** le matériel ; 2 photos max, usage interne |
 
 ---
 

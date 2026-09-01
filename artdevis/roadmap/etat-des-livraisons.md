@@ -9,7 +9,7 @@ title: État des livraisons
 | --- | --- | --- |
 | Auth et profil | Livré | Session, onboarding, acompte |
 | Clients | Livré | CRUD, fiche, historique |
-| Devis vocal | Livré | MVP 1.3, mock et prod |
+| Devis vocal | Livré | Flux 3→6 + protocole + **compléter par la voix** + **photos 0/2** (patron, hors PDF) |
 | Flux France R1-R3 | Livré | Contrôle, traduction, acompte |
 | Relation client R2b | Livré | Partage, marquer envoyé, verrouillage |
 | Chantiers | Livré | Navigation date, report, facturation à la clôture |
@@ -29,6 +29,7 @@ title: État des livraisons
 | Logging N1 | AppLogger + logs Edge Functions | Livré |
 | Factures MVP | Acompte / solde PDF | Livré |
 | Veille MVP | Repository + cubit mock | Livré |
+| Photos chantier | 2 / devis, patron, bucket privé | Livré (app) ; `db push` prod |
 
 ## Backlog prioritaire
 
@@ -36,8 +37,7 @@ title: État des livraisons
 
 * Validation E2E dictée mobile réelle + OpenAI
 * Validation E2E devis accepté → agenda → Mes Chantiers
-* Sélecteur TVA contraint (20 / 10 / 5,5)
-* Application migrations prod sur tous les environnements
+* Migration `20260901_photos_devis.sql` + redéploiement `supprimer-compte`
 
 ### P1 (valeur terrain)
 
@@ -53,8 +53,9 @@ title: État des livraisons
 * Factur-X et paiement en ligne
 * Lien web Accepter/Refuser pour le client
 * Assignation technicien, multi-jours, OR-Tools
+* Photos chantier par un salarié (login + RLS devis partagés)
+* Purge auto photos 30 j après statut terminal
 * International Espagne et Royaume-Uni
-* Re-dictée sur brouillon existant
 * Observabilité Niveau 2 (Sentry)
 
 ## Hors scope France V1

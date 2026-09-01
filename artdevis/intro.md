@@ -23,7 +23,7 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 | --- | --- | --- |
 | Authentification et profil artisan | Livré | Connexion Supabase, onboarding, paramètres acompte |
 | Clients | Livré | Liste, recherche, fiche client, historique devis |
-| Devis vocal | Livré | Flux complet Écrans 3 à 6, mock et production |
+| Devis vocal | Livré | Flux complet Écrans 3 à 6, protocole, compléter par la voix, photos 0/2 |
 | Flux devis France | Livré | Contrôle langue dictée, traduction FR, aperçu client |
 | Relation client | Livré | Partage PDF, marquer envoyé, accepté/refusé |
 | Mes Chantiers | Livré | Navigation par date, report, annulation client |
@@ -82,3 +82,5 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [Conformité stores (checklist TC-STORE)](./qa/conformite-stores-checklist)
 * [Devis vocal (guide QA)](./qa/guides/devis-vocal)
 * [Campagne onboarding (août 2026)](./qa/campagnes/2026-08-release-r2b)
+
+Pour **mettre à jour** ces pages après un changement produit : [Développement et tests](./exploitation/developpement-et-tests#maj-docs).

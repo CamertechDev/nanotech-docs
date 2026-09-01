@@ -43,6 +43,7 @@ Client répond (mail, tel, WhatsApp) → artisan marque Accepté → Mes Chantie
 | Statut `envoye` rarement persisté | **Marquer envoyé** + date visible |
 | Devis accepté/refusé non ouvrable | Consultation seule + **Remettre en brouillon** |
 | Pas d'acompte | Bloc acompte si TTC supérieur au seuil artisan |
+| Pas de photo chantier | **2 photos** techniques internes (hors PDF), patron |
 
 ## Paramètres artisan (profil / onboarding)
 

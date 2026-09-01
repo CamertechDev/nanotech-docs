@@ -35,11 +35,13 @@ Fichier à déposer : `static/img/artdevis/qa/devis-recording.png`
 
 | Action | Détail |
 | --- | --- |
+| 1ʳᵉ visite | Écran **Comment dicter un devis** → *J'ai compris* |
+| Rappel | Sous le micro : **Nouveau devis** … **Génère devis** |
 | Démarrer | Appuyer sur le bouton micro / enregistrer |
 | Pendant | Timer visible, possibilité d'annuler |
-| Terminer | Bouton **Terminer** ou équivalent pour lancer le traitement |
+| Terminer | **Inactif avant 3 secondes**, puis actif |
 
-**Mode mock :** pas de vrai micro, scénario chauffe-eau simulé en ~3 secondes.
+**Mode mock :** pas de vrai micro ; après **Terminer** (≥ 3 s), scénario **selon le client ouvert** (pas toujours un chauffe-eau). Voir tableau plus bas.
 
 **Mode web sans mock :** le micro peut échouer, comportement attendu. Utiliser mock ou Android.
 
@@ -56,6 +58,7 @@ Barre de progression avec étapes :
 | --- | --- |
 | Succès | Écran **contrôle** (langue de dictée) |
 | Erreur réseau | Écran **NetworkError** + bouton **Réessayer** |
+| Protocole manquant (prod) | **ProtocolVocalRefuse** : message « Dites Nouveau devis … Génère devis » — **pas** Réessayer réseau, **pas** de brouillon |
 
 :::info Capture d'écran
 Fichier à déposer : `static/img/artdevis/qa/devis-processing.png`
@@ -68,6 +71,9 @@ Relecture du brouillon dans la **langue détectée** (fr, pt, ar, etc.).
 | Action | Effet |
 | --- | --- |
 | Modifier une ligne | Prix, quantité, description (TVA par ligne) |
+| **Ajouter une ligne manuelle** | Catalogue ou saisie libre |
+| **Compléter par la voix** | 2ᵉ dictée, **mêmes** lignes (pas un 2ᵉ devis). Mock : +3 lignes cuisine |
+| **Photos du chantier (0/2)** | Caméra ou galerie, miniatures, plein écran. **Hors PDF client.** Patron uniquement |
 | **Valider pour le client** | Traduction automatique → français |
 
 Totaux HT, TVA et TTC recalculés **en temps réel**.
@@ -101,6 +107,8 @@ Fichier à déposer : `static/img/artdevis/qa/devis-apercu-fr.png`
 
 En production sans email auto : bannière indiquant le **partage manuel** du PDF.
 
+Les **photos du chantier** ne sont **pas** dans le PDF (contrôle interne uniquement).
+
 :::info Capture d'écran
 Fichier à déposer : `static/img/artdevis/qa/devis-pdf.png`
 :::
@@ -111,7 +119,8 @@ Sur la **fiche client**, section **Historique devis** :
 
 * Nouveau devis en statut **Brouillon**
 * Montant TTC affiché
-* Actions disponibles : ouvrir, Partager PDF, Marquer envoyé (phase 6 R2b)
+* **Seul le devis le plus récent** a le bloc d'actions ouvert (Partager PDF, etc.) ; les plus anciens sont repliés (chevron 56×56)
+* Actions : ouvrir (tap sur le titre), Partager PDF, Marquer envoyé (phase 6 R2b)
 
 Pour tester **Accepté** et **Chantiers** : marquer le devis Accepté depuis l'historique (phase 6 ou 7).
 
@@ -125,11 +134,21 @@ Pour tester **Accepté** et **Chantiers** : marquer le devis Accepté depuis l'h
 
 ## Données mock attendues
 
-Le scénario mock produit typiquement un devis **plomberie / chauffe-eau** avec plusieurs lignes et un total TTC cohérent. Vérifier :
+Le scénario dépend du **client** (plus un cycle de langues global) :
+
+| Client | Lignes types | Langue |
+| --- | --- | --- |
+| Mme Claire Dubois | Siphon évier, PER 16, MO fuite | fr-FR |
+| Mme Sophie Dupont | Chauffe-eau Thermor 200 L | fr-FR |
+| M. Bernard Luc | Mitigeur thermostatique (FR, pas EN) | fr-FR |
+| SARL Plomberie Pro | WC suspendu, TVA **20 %** | fr-FR |
+
+Vérifier :
 
 * Au moins 1 ligne matériel
 * Total TTC > 0
 * Statut **Brouillon** à la fin
+* Transcription contient **Nouveau devis** et **Génère devis** (mock)
 
 ## Lien avec les tarifs (Pro)
 
@@ -141,11 +160,16 @@ Si des tarifs fournisseurs sont configurés (phase 5) et que la dictée mentionn
 | --- | --- |
 | Micro bloqué sur Chrome | Utiliser mock ou Android |
 | NetworkError persistant | Backend down, relancer avec Réessayer |
+| Message protocole (pas réseau) | Dictée sans `Nouveau devis` / `Génère devis` — **attendu** en prod |
+| Terminer grisé | Attendre 3 secondes |
 | PDF vide ou erreur | Edge Function non déployée, devis sans lignes |
 | Pas de traduction FR | Dictée déjà en français, flux normal |
+| Mauvais chantier mock | Vérifier le client ouvert (Dubois ≠ Dupont) |
+| 3ᵉ photo refusée | Attendu : plafond **2** par devis |
+| Photos dans le PDF | Bug : elles ne doivent **jamais** y figurer |
 
 ## Cas de test liés
 
-Campagne : [TC-VOC-001 à TC-VOC-008](/artdevis/qa/campagnes/2026-08-release-r2b#phase-3--devis-vocal)
+Campagne : [TC-VOC-001 à TC-VOC-015](/artdevis/qa/campagnes/2026-08-release-r2b#phase-3--devis-vocal)
 
 Spec complète : [Devis vocal (fonctionnel)](/artdevis/fonctionnel/devis-vocal)

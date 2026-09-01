@@ -36,7 +36,7 @@ Supabase est une couche open source construite autour de **PostgreSQL**. Pour Ar
 | **Auth** | Connexion email/mot de passe, reset, invitation équipe |
 | **PostgreSQL** | Données métier (artisans, clients, devis, agenda…) |
 | **Row Level Security (RLS)** | Isolation multi-artisan (chaque patron ne voit que ses données) |
-| **Storage** | Audio de dictée (`audio-devis`), PDF (`devis-pdf`) |
+| **Storage** | Audio (`audio-devis`), PDF (`devis-pdf`, `factures-pdf`), logos, **photos chantier** (`photos-chantiers`, privé) |
 | **Edge Functions** | Pipeline IA (`devis-vocal`), PDF, email, traduction |
 | **Realtime** | Non utilisé en MVP (liste clients en `getClients()` simple) |
 
@@ -289,6 +289,7 @@ La **traduction vers le français client** est une étape **ultérieure** (Edge 
 | --- | --- |
 | `audio-devis` | Fichiers audio de dictée |
 | `devis-pdf` | PDF générés (`{artisanId}/{devisId}.pdf`) |
+| `photos-chantiers` | Photos techniques internes (max 2 / devis, **privé**, hors PDF) |
 
 ## Statuts devis
 

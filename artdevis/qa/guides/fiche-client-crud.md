@@ -65,8 +65,10 @@ La fiche affiche :
 * Adresse (+ ouverture GPS si disponible)
 * SIRET si client Pro
 * Accès chantier (digicode, étage, etc.)
-* **Historique des devis** (actions Partager PDF, Marquer envoyé, etc.)
+* **Historique des devis** (le plus récent déplié, les autres repliés)
 * Bouton **Devis vocal** (micro)
+
+En mock, chaque client seed a déjà **un devis** (statuts différents : accepté / brouillon / envoyé / refusé).
 
 :::info Capture d'écran
 Fichier à déposer : `static/img/artdevis/qa/client-fiche.png`
