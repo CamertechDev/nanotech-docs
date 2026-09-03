@@ -263,7 +263,10 @@ Ce test est CRUCIAL. Il vérifie que l'IA refuse catégoriquement de générer u
 L'audio / Le Prompt dicté :
 `Coucou chérie, oublie pas d'acheter du pain, deux kilos de pommes de terre, du lait et un pack d'eau s'il te plaît. Ah et rappelle le médecin pour le petit.`
 ## Résultat attendu (QA) :
-- **Statut API** : 400 Bad Request ou Retour JSON { "statut_ia": "REJETE" }.
+- **Statut API** : 400 Bad Request ou retour JSON :
+  ```json
+  { "statut_ia": "REJETE" }
+  ```
 - **Base de données** : Absolument AUCUNE ligne ne doit être insérée dans les tables Devis ou Lignes_devis. L'application doit afficher une erreur.
 
 # 🟣 Scénario 5 : Le Complexe "Multi-Travaux" & Tarifs B2B (Injection Contextuelle)
