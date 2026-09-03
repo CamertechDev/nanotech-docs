@@ -227,3 +227,51 @@ Préfixer **Nouveau devis.** et terminer par **Génère devis.** En mock, c'est 
 - 🎙️ **Texte à dicter** :
 `Changement d'un groupe de sécurité sur un ballon existant.`
 - 🔍 **Résultat attendu** : L'IA ajoute automatiquement la fourniture du groupe de sécurité (~25€) ET estime 1h de main d'œuvre pour la pose/vidange   partielle !
+
+# 🟢 Scénario 6 : Le "Happy Path" (Cas idéal et standard)
+**Ce test vérifie que le moteur de base fonctionne parfaitement et extrait toutes les informations simples.**
+- L'audio / Le Prompt dicté :
+`Salut c'est pour la réparation chez Monsieur Bernard. Il faut changer le mécanisme de la chasse d'eau des toilettes du rez-de-chaussée qui fuit. Prévois un mécanisme complet Geberit, un robinet flotteur neuf, et compte 1 heure de main-d'œuvre. Je pense que le matos va nous coûter autour de 45 balles en tout.`
+
+- **Résultat attendu (QA)** :
+- **Urgence** : 2 (Normal) ou 1 (Fuite - acceptable)
+- **Lignes matérielles** : Mécanisme chasse d'eau Geberit (1x) / Robinet flotteur (1x)
+- **Main d'œuvre** : 1 heure
+ -**Total Matériel estimé par IA** : ~45€
+
+# 🟡 Scénario 2 : Le Bruit et l'Hésitation (Denoising & Query Rewriting)
+Ce test vérifie que la fonctionnalité "Structured Outputs" d'OpenAI et votre instruction de nettoyage réussissent à ignorer le bla-bla de l'artisan.
+- **L'audio / Le Prompt dicté** :
+`Ouais euh, alors... je suis chez la cliente, madame... euh... madame Dupont. Pfff, c'est n'importe quoi ici. Bon, écoute, tu me notes une intervention pour un changement de ballon d'eau chaude. Met un 150 litres, non attends, mets un 200 litres plutôt, marque Thermor. Et puis euh... rajoute un groupe de sécurité et deux raccords isolants diélectriques. La MO on va dire euh... 2 heures trente, ouais c'est ça.`
+## Résultat attendu (QA) :
+- **Matériel retenu** : Chauffe-eau Thermor 200L (le 150L doit être ignoré par l'IA).
+- **Main d'œuvre** : 2.5 heures (ou 150 minutes).
+ - **Description** : La description ne doit contenir AUCUN mot de type "euh", "attends", "pfff".
+# 🟠 Scénario 3 : Le Multilingue et l'Unité de mesure (Traduction et Formatage)
+Ce test valide la puissance de Whisper (traduction) et la capacité de GPT à normaliser des unités étranges.
+- **L'audio / Le Prompt dicté** :
+(Le test doit idéalement être fait en enregistrant cet audio en Portugais, Arabe ou Anglais)
+`Preciso de 3 metros de tubo de cobre de 14 milímetros, 5 cotovelos de cobre e pasta de soldar. Também 4 horas de trabalho para instalar os radiadores.`
+(Traduction : J'ai besoin de 3 mètres de tube cuivre 14mm, 5 coudes cuivre et de la pâte à braser. Aussi 4 heures de travail pour installer les radiateurs).
+## Résultat attendu (QA) :
+- **Langue détectée** : pt (Portugais).
+ - **JSON** : Rédigé à 100% en Français (Tube cuivre, coudes...).
+- **Unités** : Le tube cuivre doit avoir la quantité 3 et l'unité mètre. Les coudes doivent avoir la quantité 5 et l'unité pièce. L'IA ne doit pas mélanger les mètres et les pièces.
+
+# 🔴 Scénario 4 : L'Agent "Gatekeeper" (Test de Sécurité Anti-Spam)
+Ce test est CRUCIAL. Il vérifie que l'IA refuse catégoriquement de générer un devis pour un sujet hors du bâtiment (pour protéger votre API).
+L'audio / Le Prompt dicté :
+`Coucou chérie, oublie pas d'acheter du pain, deux kilos de pommes de terre, du lait et un pack d'eau s'il te plaît. Ah et rappelle le médecin pour le petit.`
+## Résultat attendu (QA) :
+- **Statut API** : 400 Bad Request ou Retour JSON { "statut_ia": "REJETE" }.
+- **Base de données** : Absolument AUCUNE ligne ne doit être insérée dans les tables Devis ou Lignes_devis. L'application doit afficher une erreur.
+
+# 🟣 Scénario 5 : Le Complexe "Multi-Travaux" & Tarifs B2B (Injection Contextuelle)
+Ce test vérifie l'architecture complète. L'IA doit piocher dans le catalogue et séparer intelligemment un gros chantier en plusieurs postes.
+- **L'audio / Le Prompt dicté** :
+`Gros chantier de rénovation. Pour la partie salle de bain, il me faut un receveur de douche extra plat 90x90, une paroi en verre, et une colonne de douche Grohe. Pour la cuisine, un évier double bac inox avec mitigeur douchette. Et prévois aussi la location d'un camion benne pour évacuer les gravats. Je compte en tout 4 jours pleins de boulot avec mon gars.`
+(Pré-requis : Vous avez simulé dans votre BDD que cet artisan a un prix négocié de 250€ chez Cédéo pour la "Colonne de douche Grohe").
+## Résultat attendu (QA) :
+- **Exhaustivité** : Le JSON doit générer au moins 6 lignes de devis distinctes (Receveur, Paroi, Colonne Grohe, Évier, Location Camion, Main d'œuvre).
+- **Pricing B2B** : Le prix unitaire généré pour la ligne "Colonne de douche Grohe" doit être exactement 250€ (l'IA a bien lu la table des tarifs avant de générer le JSON).
+- **Temps estimé** : 4 jours de boulot pour 2 personnes = l'IA doit idéalement le traduire en 64 heures de MO.
