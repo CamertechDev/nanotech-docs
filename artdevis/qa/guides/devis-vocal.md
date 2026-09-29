@@ -152,7 +152,7 @@ Vérifier :
 
 ## Lien avec les tarifs (Pro)
 
-Si des tarifs fournisseurs sont configurés (phase 5) et que la dictée mentionne un produit du catalogue, l'IA peut appliquer le **prix négocié**. Sans tarif : devis produit quand même (prix génériques).
+Si des tarifs fournisseurs sont configurés (phase 5) et que la dictée mentionne un produit du catalogue, l'IA applique le **prix négocié**. Sinon le **prix indicatif** Super Admin s'il existe. Sinon **0** (à compléter dans le brouillon) — jamais un prix marché inventé.
 
 ## Erreurs fréquentes
 

@@ -78,10 +78,10 @@ Toute **erreur technique** du pipeline aboutit à **NetworkError** (français, a
 | Transcription | OpenAI Whisper |
 | Contrôle protocole | Après Whisper, avant GPT — 422 `protocole_vocal` si bornes absentes |
 | Analyse et structuration | GPT-4o-mini, JSON strict |
-| Catalogue | Matching sur ~40 produits seedés |
+| Catalogue | Matching ~40 produits + **prix indicatif HT** |
 | Tarifs B2B | Injection des tarifs artisan (20 max) |
 
-**Fallback** : sans tarif configuré, le devis est produit quand même avec des prix génériques. Le flux n'est jamais bloquant.
+**Chaîne de prix** : tarif artisan B2B (si match) → sinon **prix indicatif** catalogue → sinon **0** (jamais d'estimation marché GPT). Le flux n'est jamais bloquant. Détail : [Catalogue et tarifs](./catalogue-fournisseurs).
 
 ## PDF (Edge Function `generer-pdf-devis`)
 

@@ -46,3 +46,14 @@ lisent/écrivent la même base SQL Server, module par module), soit synchronisat
 🟡 Recommandation : **base partagée** si le schéma le permet sans risque (c'est déjà une base
 unique, pas de duplication) — évite de construire un mécanisme de synchronisation
 supplémentaire, cohérent avec la contrainte de ressources.
+
+## Instances GestionBois (on-premise et SaaS)
+
+Le packaging d’une **instance client** (serveur local vs tenant en ligne) et l’association
+à un achat sur le portail licences sont décrits dans
+[Functional/onboarding-licences.md](../Functional/onboarding-licences.md).
+
+L’installateur on-premise exécute les scripts **sur le serveur client** (même modèle que SysFact) :
+`GestionBois/scripts/install-sqlserver.ps1` ou `install-postgres.ps1`, livrable
+`build-release.ps1`. Guide : `GestionBois/docs/LICENSING/GUIDE-INSTALLATION.md`
+(aussi servi sur le portail owner, onglet GestionBois).

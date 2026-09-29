@@ -43,9 +43,10 @@ Accès : **Profil → Mes tarifs fournisseurs** ou menu dédié selon votre form
 
 Consultez votre formule actuelle (**Essai**, **Base**, **Professionnel**).
 
-Sur web et Android : comparatif des formules et simulation de changement (MVP sans paiement en ligne).
+- **Web** : comparatif des formules, puis page Checkout **simulée** (Stripe n'est pas encore branché). **Payer** ne débite rien. Pour activer une formule : **Contacter le support** (adresse du cockpit, défaut `contact@artdevis.fr`).
+- **iPhone / iPad et Android** : informations **sans prix** et **sans bouton d'achat**. **Contacter le support** ouvre un brouillon Mail vers l'adresse configurée dans le cockpit (l'artisan envoie le message). La formule n'est activée qu'après traitement par ArtDevis.
 
-Sur **iPhone/iPad** : informations sans prix — contactez le support pour changer de formule.
+Détail : [Paiement Stripe](../fonctionnel/paiement-stripe).
 
 ---
 

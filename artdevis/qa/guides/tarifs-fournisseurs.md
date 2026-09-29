@@ -11,7 +11,7 @@ L'artisan enregistre **ses remises négociées** (CEDEO, Point.P, etc.) sur des 
 :::warning Plan requis et périmètre
 * Plan **Professionnel (Pro)** obligatoire
 * Tarifs **par artisan**, pas par client
-* Catalogue produits/fournisseurs **fixe** (seeds plateforme), pas de création libre en MVP
+* Catalogue produits/fournisseurs **tenu par le Super Admin** (CSV) — l'artisan **choisit** dans la liste, il ne la crée pas
 :::
 
 ## Accès
@@ -61,17 +61,17 @@ Fichier à déposer : `static/img/artdevis/qa/tarifs-form.png`
 
 1. L'artisan configure ses tarifs ici
 2. Lors d'une dictée, l'Edge Function `devis-vocal` injecte jusqu'à **20 tarifs**
-3. Sans tarif configuré : le devis est quand même produit (prix génériques)
+3. Sans tarif configuré : **prix indicatif** catalogue si renseigné, sinon **0**
 
-Voir aussi : [Catalogue et tarifs fournisseurs](/artdevis/fonctionnel/catalogue-fournisseurs)
+Voir aussi : [Catalogue et tarifs fournisseurs](/artdevis/fonctionnel/catalogue-fournisseurs) · [Catalogue Super Admin](/artdevis/qa/guides/catalogue-admin)
 
 ## Limites MVP (ne pas tester comme bug)
 
 | Besoin terrain | État |
 | --- | --- |
-| Ajouter un fournisseur perso | Non disponible |
-| Ajouter un produit hors catalogue | Non disponible |
-| Importer une grille Excel/PDF | Phase 2 |
+| Ajouter un fournisseur / produit **perso** (privé) | Non disponible |
+| Enrichir le catalogue **national** | Super Admin — [guide](/artdevis/qa/guides/catalogue-admin) |
+| Importer **sa** grille Excel de tarifs négociés | Phase 2 |
 | Tarif différent par client | Non, toujours par artisan |
 
 ## Cas de test liés
@@ -82,6 +82,6 @@ Campagne : [TC-TAR-001 à TC-TAR-005](/artdevis/qa/campagnes/2026-08-release-r2b
 
 | Symptôme | Cause probable |
 | --- | --- |
-| Produit absent de la liste | Catalogue seed limité (~8 produits) |
+| Produit absent de la liste | Demander au Super Admin d'enrichir le catalogue (CSV) |
 | Prix négocié refusé | Supérieur au prix public |
 | Tarifs non appliqués au devis | Mock vocal, ou produit non reconnu par l'IA |

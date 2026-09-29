@@ -13,9 +13,10 @@ title: État des livraisons
 | Flux France R1-R3 | Livré | Contrôle, traduction, acompte |
 | Relation client R2b | Livré | Partage, marquer envoyé, verrouillage |
 | Chantiers | Livré | Navigation date, report, facturation à la clôture |
-| Catalogue tarifs | Livré | Référentiel fixe + tarifs privés |
+| Catalogue tarifs | Livré | Super Admin CRUD + CSV ; tarifs privés artisan ; prix indicatif vocal |
 | Veille | MVP mock | Alertes démo, actions SMS, badge dynamique |
 | Factures acompte / solde | Livré | PDF + partage, Edge Function `generer-pdf-facture` |
+| Abonnements Stripe | Simulation web | `/checkout` maquette ; HTTPS Vercel OK ; webhook Phase 2 |
 | Email auto Resend | Code livré | Désactivé en prod |
 
 ## Releases produit (France)
@@ -30,6 +31,7 @@ title: État des livraisons
 | Factures MVP | Acompte / solde PDF | Livré |
 | Veille MVP | Repository + cubit mock | Livré |
 | Photos chantier | 2 / devis, patron, bucket privé | Livré (app) ; `db push` prod |
+| Catalogue Super Admin | CRUD + CSV + prix indicatif vocal | Livré (app) ; `db push` + redeploy `devis-vocal` |
 
 ## Backlog prioritaire
 
@@ -43,7 +45,8 @@ title: État des livraisons
 
 * Google Maps pour temps de route réels
 * Brancher disponibilités artisan au planning
-* Import CSV tarifs fournisseurs (scénario hybride)
+* Import CSV **tarifs artisan** (grille perso) — le CSV Super Admin catalogue est livré
+* Catalogue hybride (produits **perso** artisan, invisibles des autres)
 * Validation E2E facture solde après chantier terminé
 * Déploiement `generer-pdf-facture` + migration `20260835_factures.sql`
 
@@ -72,7 +75,7 @@ title: État des livraisons
 | Expéditeur email | Adresse plateforme vs email artisan |
 | MVP Chantiers | Valider malgré trajets simulés ? |
 | Priorisation | Google Maps vs Veille |
-| Catalogue | Scénario hybride (B) vs centralisé (A) |
+| Catalogue national | **Livré** (Super Admin + CSV). Reste ouvert : catalogue **perso** artisan (hybride) |
 | Starter + planification | Bloquer la planification auto sans Pro ? |
 | MVP vocal | Démo commerciale vs beta interne |
 

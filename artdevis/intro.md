@@ -28,9 +28,10 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 | Relation client | Livré | Partage PDF, marquer envoyé, accepté/refusé |
 | Mes Chantiers | Livré | Navigation par date, report, annulation client |
 | Mon Équipe | Livré | Gestion des opérateurs rattachés au patron |
-| Catalogue fournisseurs | Livré | Tarifs privés par artisan, injection IA |
+| Catalogue fournisseurs | Livré | Super Admin CRUD + CSV ; tarifs privés artisan ; prix indicatif vocal |
 | Veille et entretien | MVP mock | Alertes démo, SMS, badge dynamique — données réelles Phase 2 |
 | Factures acompte / solde | Livré | PDF + partage depuis fiche client et chantiers terminés |
+| Paiement Stripe (abos) | Simulation web | Checkout maquette ; iOS/Android sans achat |
 
 ## Interface
 ![alt text](image.png)
@@ -58,6 +59,8 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [Chantiers et veille](./fonctionnel/chantiers-et-veille)
 * [Factures (acompte et solde)](./fonctionnel/factures)
 * [Catalogue et tarifs fournisseurs](./fonctionnel/catalogue-fournisseurs)
+* [Cockpit Super Admin](./fonctionnel/cockpit-admin)
+* [Paiement Stripe (abonnements)](./fonctionnel/paiement-stripe)
 
 **Guide utilisateur** *(artisans)*
 * [Premiers pas](./guide-utilisateur/premiers-pas)
@@ -81,6 +84,7 @@ Le client final **n'utilise pas l'application**. Toute la relation commerciale p
 * [Index guides QA](./qa/guides/index-guides-qa)
 * [Conformité stores (checklist TC-STORE)](./qa/conformite-stores-checklist)
 * [Devis vocal (guide QA)](./qa/guides/devis-vocal)
+* [Catalogue Super Admin (guide QA)](./qa/guides/catalogue-admin)
 * [Campagne onboarding (août 2026)](./qa/campagnes/2026-08-release-r2b)
 
 Pour **mettre à jour** ces pages après un changement produit : [Développement et tests](./exploitation/developpement-et-tests#maj-docs).

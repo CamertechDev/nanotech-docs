@@ -20,6 +20,7 @@ Les **campagnes de tests** ([Campagne onboarding août 2026](/artdevis/qa/campag
 | 3 | [Devis vocal](/artdevis/qa/guides/devis-vocal) | TC-VOC-xxx |
 | 4 | [Mon équipe](/artdevis/qa/guides/fiche-equipe) | TC-EQP-xxx |
 | 5 | [Tarifs fournisseurs](/artdevis/qa/guides/tarifs-fournisseurs) | TC-TAR-xxx |
+| 5b | [Catalogue Super Admin](/artdevis/qa/guides/catalogue-admin) | TC-ADM-CAT-xxx |
 | 6 | [Relation client R2b](/artdevis/fonctionnel/relation-client) | TC-R2B-xxx |
 | 7 | [Chantiers](/artdevis/fonctionnel/chantiers-et-veille) | TC-CHA-xxx |
 | 8 | [Veille MVP](/artdevis/fonctionnel/chantiers-et-veille) | TC-VEI-xxx |
@@ -45,6 +46,7 @@ Voir [Ajouter des captures d'écran](/artdevis/qa/guides/captures-ecran) pour la
 | --- | --- | --- | --- |
 | `julien@plomberie.fr` | `password123` | Essai / Base | Parcours général |
 | `pro@plomberie.fr` | `password123` | Pro | Équipe, tarifs, chantiers |
+| `admin@artdevis.fr` | `admin123` | Super Admin | Cockpit + catalogue CSV |
 
 Pour tester l'inscription, utiliser un **email jamais utilisé** (ex. `qa-test+001@votredomaine.fr`).
 

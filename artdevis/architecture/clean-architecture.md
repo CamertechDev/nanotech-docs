@@ -281,9 +281,9 @@ lib/
     ├── equipe/               # Membres rattachés au patron
     ├── devis/                # Flux vocal, historique, PDF
     ├── chantiers/            # Planning du jour
-    ├── catalogue/            # Tarifs fournisseurs
+    ├── catalogue/            # Tarifs fournisseurs (artisan)
     ├── veille/               # Coquille Phase 2
-    ├── admin/                # Cockpit super-admin
+    ├── admin/                # Cockpit Super Admin + catalogue national
     ├── home/                 # Shell de navigation
     └── profil/               # Paramètres artisan
 ```

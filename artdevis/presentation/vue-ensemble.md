@@ -13,7 +13,7 @@ L'application combine :
 * un **assistant vocal** pour produire des devis à partir d'une dictée, éventuellement **complétés** par une 2ᵉ dictée et **2 photos techniques** (hors PDF client) ;
 * un suivi des **chantiers du jour** après acceptation d'un devis ;
 * une section **veille et entretien** (Phase 2) ;
-* un **cockpit admin** pour la suspension de comptes.
+* un **cockpit admin** pour le parc artisans **et** le catalogue national (CSV).
 
 ## Utilisateurs et rôles
 
@@ -21,7 +21,7 @@ L'application combine :
 | --- | --- |
 | **Patron (owner)** | Clients, devis, équipe, chantiers (plan Pro), tarifs fournisseurs |
 | **Opérateur** | Accès limité, prévu pour le planning équipe en Phase 2 |
-| **Super admin** | Tableau de bord de suspension/réactivation des comptes artisans |
+| **Super admin** | Parc artisans (plans, suspension) + **catalogue produits** (CRUD, CSV, prix indicatif) |
 | **Client final** | Hors application, reçoit le PDF et répond par ses canaux habituels |
 
 ## Plans d'abonnement (aperçu)

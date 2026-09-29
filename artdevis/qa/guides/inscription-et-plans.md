@@ -68,12 +68,12 @@ Fichier à déposer : `static/img/artdevis/qa/plans-comparatif.png`
 
 Sur l'écran inscription, lien **Voir les formules…** → ouvre une feuille comparatif **Base / Professionnel**.
 
-:::warning iOS (App Store)
-Sur **iPhone/iPad (build natif)**, ce lien est **masqué** (règle Apple 3.1.1 — pas de prix abonnement in-app). Tester sur Web ou Android pour TC-AUTH plans, ou voir [Checklist TC-STORE](/artdevis/qa/conformite-stores-checklist).
+:::warning iOS et Android (stores)
+Sur **iPhone/iPad et Android (build natif)**, ce lien est **masqué** (Apple 3.1.1 / Play Billing — pas de prix abonnement in-app). Tester le comparatif et le Checkout **sur le web**. Voir [Paiement Stripe](/artdevis/fonctionnel/paiement-stripe) et [Checklist TC-STORE](/artdevis/qa/conformite-stores-checklist).
 :::
 
-:::warning MVP août 2026
-Le changement de plan depuis cette feuille est une **simulation** (pas de paiement Stripe). Pour tester le plan **Pro** sans payer : utiliser `pro@plomberie.fr` ou simuler l'upgrade depuis **Profil → Mon abonnement**.
+:::warning MVP — Stripe non branché
+« Choisir Base / Pro » ouvre `/checkout` (page type Stripe). **Payer** n'active pas le plan. Pour un compte **Pro** de test : `pro@plomberie.fr` / `julien@plomberie.fr`, ou activation manuelle support / cockpit admin.
 :::
 
 ## Connexion

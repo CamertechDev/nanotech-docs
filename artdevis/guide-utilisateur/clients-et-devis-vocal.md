@@ -87,7 +87,7 @@ Le devis apparaît dans **Historique devis** avec le statut **Brouillon**.
 
 Si vous avez renseigné vos **tarifs négociés** (Profil → Mes tarifs fournisseurs), la dictée peut appliquer vos prix B2B quand le produit est reconnu.
 
-Sans tarif configuré : le devis est quand même créé avec des prix génériques — **vérifiez toujours le brouillon** avant envoi.
+Sans tarif configuré : l'IA peut encore appliquer le **prix indicatif** du catalogue ArtDevis, sinon **0 €**. **Vérifiez toujours le brouillon** avant envoi.
 
 ---
 

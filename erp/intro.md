@@ -67,8 +67,11 @@ erp/
 ├── Database/       → Le schéma de données réel et sa migration
 ├── Frontend/       → L'application cliente
 ├── DevOps/         → Déploiement, CI/CD, supervision
+├── QA/             → Pack recette IFO (inventaire + forêt, comptes, jeux de données)
 └── images/         → Diagrammes (schémas extraits des sources, à régénérer proprement)
 ```
+
+**Licences (nouveau client on-site / SaaS)** : [Functional/onboarding-licences.md](./Functional/onboarding-licences.md).
 
 ## Principe directeur pour toute contribution (humaine ou IA)
 

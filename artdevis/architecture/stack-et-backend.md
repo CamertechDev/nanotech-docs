@@ -140,8 +140,9 @@ erDiagram
 | `devis` | En-tête devis, statut, langue, urgence | `artisan_id` |
 | `lignes_devis` | Matériel et main d'œuvre, TVA par ligne | via `devis_id` |
 | `agenda` | Chantiers planifiés (1 max par devis) | via `artisan_id` (RLS) |
-| `fournisseurs` | Référentiel global (seeds) | lecture seule |
-| `materiaux_catalogue` | Produits prédéfinis (seeds) | lecture seule |
+| `fournisseurs` | Référentiel global | lecture authentifiée ; écriture Super Admin |
+| `materiaux_catalogue` | Produits + prix indicatif HT | lecture authentifiée ; écriture Super Admin |
+| `catalogue_fournisseur_produits` | Liens produit ↔ fournisseur | lecture authentifiée ; écriture Super Admin |
 | `tarifs_artisan` | Prix négociés privés | `artisan_id` (RLS) |
 | `propositions_prix_web` | Comparaisons web | Phase 2 |
 
@@ -251,6 +252,8 @@ Sans moteur de recherche dédié, le **re-ranking** est confié au prompt GPT (�
 * Comparer chaque matériel dicté à la liste catalogue
 * Choisir le produit le plus proche sémantiquement (« ballon Thermor 200 » → « Chauffe-eau électrique 200L »)
 * Appliquer le tarif négocié si le produit matché figure dans les tarifs B2B
+* Sinon appliquer le **prix indicatif HT** du produit catalogue s'il est renseigné
+* Sinon `prix_unitaire_ht = 0` — ne jamais inventer un prix marché
 
 ### Nettoyage de la dictée (query rewriting)
 
