@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkexfob_docs=self.webpackChunkexfob_docs||[]).push([[3181],{11927:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Business","slug":"/category/business","permalink":"/erp/category/business","sidebar":"erpSidebar","navigation":{"next":{"title":"Acteurs et cas d\'utilisation","permalink":"/erp/Business/actors"}}}}')}}]);

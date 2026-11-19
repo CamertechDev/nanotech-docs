@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkexfob_docs=self.webpackChunkexfob_docs||[]).push([[1487],{11351:s=>{s.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"artdevis"}')}}]);

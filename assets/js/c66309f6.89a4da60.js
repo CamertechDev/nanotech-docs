@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkexfob_docs=self.webpackChunkexfob_docs||[]).push([[7599],{72807:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Business","slug":"/category/business","permalink":"/cabineris/category/business","sidebar":"cabinerisSidebar","navigation":{"next":{"title":"Acteurs","permalink":"/cabineris/Business/actors"}}}}')}}]);
