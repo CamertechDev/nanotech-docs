@@ -38,12 +38,20 @@ npm run build
 
 Le contenu statique généré se trouve dans le dossier `build/`.
 
-## Déploiement Azure Static Web App
+## Déploiement sur Vercel
 
-1. Créer une Azure Static Web App.
-2. Pointer le build vers le dossier `build/`.
-3. Configurer la commande de build : `npm run build`.
-4. Déployer.
+Le workflow GitHub Actions `.github/workflows/deploy-vercel.yml` déploie sur Vercel
+à chaque push sur `main`. Il peut aussi être lancé manuellement depuis l'onglet
+**Actions** de GitHub.
+
+Dans **Settings → Secrets and variables → Actions**, créer ces secrets du dépôt :
+
+- `VERCEL_TOKEN` : jeton d'accès Vercel.
+- `VERCEL_ORG_ID` : valeur `orgId` du fichier local `.vercel/project.json`.
+- `VERCEL_PROJECT_ID` : valeur `projectId` du même fichier.
+
+Ne pas ajouter le jeton Vercel au dépôt. Une fois les secrets configurés, pousser
+les changements sur `main` pour déclencher le déploiement.
 
 ## Architecture
 
@@ -61,3 +69,5 @@ Chaque instance a son propre contenu (`erp/`, `cabineris/`, `sysfact/`) et sa pr
 2. Créer une sidebar `sidebars/mon-projet.js`.
 3. Ajouter une nouvelle instance du plugin docs dans `docusaurus.config.js`.
 4. Ajouter un lien dans la navbar et le footer.
+`npx vercel --prod`
+`npx vercel login`

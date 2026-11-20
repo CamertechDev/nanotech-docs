@@ -11,8 +11,8 @@ const config = {
   url: 'https://nanotechdocs.vercel.app',
   baseUrl: '/',
 
-  organizationName: 'NanoTech-Inovation',
-  projectName: 'NanoTech-docs',
+  organizationName: 'CamertechDev',
+  projectName: 'nanotech-docs',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',

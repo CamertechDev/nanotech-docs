@@ -22,7 +22,12 @@ et de sa plateforme produit **NanoAdmin ERP**, ERP SaaS hébergé sur Microsoft 
 
 ## Contenu de cette section
 
-
+| Section | Contenu |
+|---|---|
+| Le Cabinet | Positionnement du cabinet |
+| NanoAdmin ERP | ERP SaaS Azure |
+| RAMSES RAG | Installation client, pipeline technique, Calebasse/vase, recettes QA, gouvernance |
+| RAMSES IA | Offre grand public (Ramsess-AI) : Cloud Run, Neon `nanoia`, chat open source. Mise en service en cours. |
 
 ## Légende des statuts
 
